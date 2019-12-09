@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     title: 'Navigation test',
-    home: FirstScreen(),
+//    home: FirstScreen(),
+    initialRoute: '/',
+    routes: {
+      '/': (context) => FirstScreen(),
+      '/second': (context) => SecondScreen(),
+    },
   ));
 }
 
@@ -18,8 +23,8 @@ class FirstScreen extends StatelessWidget {
       body: RaisedButton(
           child: Text('Go to second'),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SecondScreen()));
+            Navigator.pushNamed(context, '/second');
+//            Navigator.push(context, MaterialPageRoute(builder: (context) => SecondScreen()));
           }
       ),
     );
