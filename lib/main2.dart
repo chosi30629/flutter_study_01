@@ -23,7 +23,10 @@ class FirstScreen extends StatelessWidget {
       body: RaisedButton(
           child: Text('Go to second'),
           onPressed: () {
-            Navigator.pushNamed(context, '/second');
+
+            MyArguments params = MyArguments('My title', 'My message');
+
+            Navigator.pushNamed(context, '/second', arguments: params);
 //            Navigator.push(context, MaterialPageRoute(builder: (context) => SecondScreen()));
           }
       ),
@@ -36,16 +39,31 @@ class FirstScreen extends StatelessWidget {
 class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    // TODO extract params
+    MyArguments extractedParams = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Second screen'),
       ),
-      body: RaisedButton(
-          child: Text('Return to first'),
-          onPressed: () {
-            Navigator.pop(context);
-          }
+      body: Column(
+        children: <Widget> [
+          Text(extractedParams.title + ' ' + extractedParams.message),
+          RaisedButton(
+            child: Text('Return to first'),
+            onPressed: () {
+              Navigator.pop(context);
+          }),
+        ],
       ),
     );
   }
+}
+
+class MyArguments {
+  final String title;
+  final String message;
+
+  MyArguments(this.title, this.message);
 }
